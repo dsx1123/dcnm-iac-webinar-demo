@@ -1,0 +1,37 @@
+---
+- name: create ansible vrf and network
+  hosts: dcnm
+  gather_facts: false
+  collections:
+    - cisco.dcnm
+  vars:
+    int_grp: 
+      - Ethernet1/3
+      - Ethernet1/4
+  tasks:
+    - name: TASK 01 CREATE VRF ANSIBLE
+      dcnm_vrf:
+        fabric: fabric-demo
+        state: merged
+        config:
+          - vrf_name: ANSIBLE
+            #vlan_id: 2000
+            attach: 
+              - ip_address: 172.31.217.122
+              - ip_address: 172.31.217.123
+
+    - name: TASK 02 CREATE NETWORK ANSIBLE
+      dcnm_network:
+        fabric: fabric-demo
+        config:
+          - net_name: ANSIBLE_NETWORK
+            vrf_name: ANSIBLE
+            gw_ip_subnet: "10.1.1.1/24"
+            attach:
+              - ip_address: 172.31.217.122
+                ports: "{{ int_grp }}"
+              - ip_address: 172.31.217.123
+                ports: "{{ int_grp }}"
+        deploy: true
+        stage: merge
+
