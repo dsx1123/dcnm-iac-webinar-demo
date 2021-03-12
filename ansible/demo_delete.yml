@@ -1,0 +1,21 @@
+---
+- name: delete ansible vrf and network
+  hosts: dcnm
+  gather_facts: false
+  collections:
+    - cisco.dcnm
+  tasks:
+    - name: TASK 01 DELTE NETWORK ANSIBLE-NETWORK
+      dcnm_network:
+        fabric: fabric-demo
+        config: 
+          - net_name: ANSIBLE_NETWORK
+        state: deleted
+
+    - name: TASK 02 DELETE VRF ANSIBLE
+      dcnm_vrf:
+        fabric: fabric-demo
+        config:
+          - vrf_name: ANSIBLE
+        state: deleted
+

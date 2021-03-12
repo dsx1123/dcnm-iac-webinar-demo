@@ -32,6 +32,6 @@
                 ports: "{{ int_grp }}"
               - ip_address: 172.31.217.123
                 ports: "{{ int_grp }}"
-        deploy: true
-        stage: merge
+            deploy: true
+        state: overridden
 
