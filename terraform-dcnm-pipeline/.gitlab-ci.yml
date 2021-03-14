@@ -1,0 +1,87 @@
+stages:
+  - validate
+  - plan
+  - deploy
+
+tf_validate:
+  image:
+    name: "hashicorp/terraform"
+    entrypoint: [""]
+  stage: validate
+  before_script:
+    - export http_proxy="http://proxy.esl.cisco.com:8080"
+    - export https_proxy="http://proxy.esl.cisco.com:8080"
+    - export no_proxy="localhost,127.0.0.1,172.25.74.53"
+  script:
+    - terraform init -input=false -backend=false prod
+    - terraform init -input=false -backend=false stage
+    - terraform validate prod
+    - terraform validate stage
+
+tf_plan_stage:
+  only:
+    - branches
+  except:
+    - master
+  image:
+    name: "hashicorp/terraform"
+    entrypoint: [""]
+  stage: plan
+  before_script:
+    - export http_proxy="http://proxy.esl.cisco.com:8080"
+    - export https_proxy="http://proxy.esl.cisco.com:8080"
+    - export no_proxy="localhost,127.0.0.1,172.25.74.53"
+  script:
+    - cd stage
+    - terraform init
+    - terraform plan
+
+tf_plan_prod:
+  only:
+    - master
+  image:
+    name: "hashicorp/terraform"
+    entrypoint: [""]
+  stage: plan
+  before_script:
+    - export http_proxy="http://proxy.esl.cisco.com:8080"
+    - export https_proxy="http://proxy.esl.cisco.com:8080"
+    - export no_proxy="localhost,127.0.0.1,172.25.74.53"
+  script:
+    - cd prod
+    - terraform init
+    - terraform plan
+
+tf_deloy_stage:
+  only:
+    - branches
+  except:
+    - master
+  image:
+    name: "hashicorp/terraform"
+    entrypoint: [""]
+  stage: deploy
+  before_script:
+    - export http_proxy="http://proxy.esl.cisco.com:8080"
+    - export https_proxy="http://proxy.esl.cisco.com:8080"
+    - export no_proxy="localhost,127.0.0.1,172.25.74.53"
+  script:
+    - cd stage
+    - terraform init
+    - terraform apply -auto-approve  
+
+tf_deloy_prod:
+  only:
+    - master
+  image:
+    name: "hashicorp/terraform"
+    entrypoint: [""]
+  stage: deploy
+  before_script:
+    - export http_proxy="http://proxy.esl.cisco.com:8080"
+    - export https_proxy="http://proxy.esl.cisco.com:8080"
+    - export no_proxy="localhost,127.0.0.1,172.25.74.53"
+  script:
+    - cd prod
+    - terraform init
+    - terraform apply -auto-approve  

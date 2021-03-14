@@ -1,0 +1,2 @@
+## Terraform DCNM CI/CD demo
+[![pipeline status](https://gitlab-sjc.cisco.com/shdu/terraform-dcnm-pipeline/badges/master/pipeline.svg)](https://gitlab-sjc.cisco.com/shdu/terraform-dcnm-pipeline/commits/master)
