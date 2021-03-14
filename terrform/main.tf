@@ -18,24 +18,6 @@ data "dcnm_inventory" "leaf" {
   switch_name = each.value
 }
 
-resource "dcnm_vrf" "vrfs" {
-  fabric_name      = "fabric-demo"
-  segment_id       = 50001
-  name             = "BLUE"
-  vlan_name        = "BLUE"
-  description      = "vrf created from terraform"
-  intf_description = "vrf blue"
-  deploy           = true
-  dynamic "attachments" {
-    for_each = [for l in data.dcnm_inventory.leaf : l.serial_number]
-    content {
-      serial_number = attachments.value
-      attach        = true
-    }
-  }
-}
-
-
 resource "dcnm_vrf" "terraform" {
   fabric_name = var.fabric
   name        = "terraform"
@@ -52,7 +34,7 @@ resource "dcnm_vrf" "terraform" {
 
 resource "dcnm_network" "terraform" {
   fabric_name  = var.fabric
-  name         = "NETWORK-TERRAFORM"
+  name         = "network_terraform"
   description  = "create from terraform"
   vrf_name     = "terraform"
   ipv4_gateway = "10.10.1.1/24"
