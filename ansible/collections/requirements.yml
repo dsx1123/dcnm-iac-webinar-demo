@@ -1,0 +1,6 @@
+---
+collections:
+  - name: cisco.dcnm
+    version: "1.0.0"
+  - name: cisco.nxos
+    version: "2.0.1-dev1"
