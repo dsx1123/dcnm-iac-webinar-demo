@@ -12,14 +12,14 @@ variable "dcnm_password" {
 variable "fabric" {
   description = "fabric name"
   type        = string
-  default     = "fabric-demo"
+  default     = "fabric-cylon"
 }
 
 variable "leaf" {
   type = list(string)
   default = [
-    "93216TC-FX2-A-S1",
-    "93216TC-FX2-B-S1",
+    "93240YC-FX2-L01-S4",
+    "93240YC-FX2-L02-S4",
   ]
 }
 

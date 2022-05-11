@@ -2,14 +2,15 @@ terraform {
   required_providers {
     dcnm = {
       source  = "CiscoDevNet/dcnm"
-      version = "0.0.5"
+      version = "1.2.2"
     }
   }
 }
 provider "dcnm" {
   username = var.dcnm_username
   password = var.dcnm_password
-  url      = "https://172.25.74.53"
+  url      = "https://172.25.74.47"
+  platform = "nd"
 }
 
 data "dcnm_inventory" "leaf" {
